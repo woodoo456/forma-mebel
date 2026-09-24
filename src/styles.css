@@ -361,31 +361,40 @@ textarea:focus-visible,
   position: fixed;
   z-index: 1000;
   inset: 0;
-  display: flex;
-  justify-content: flex-end;
-  min-width: 320px;
+  width: auto;
+  min-width: 0;
   height: 100dvh;
-  background: rgba(20, 21, 18, 0.46);
+  margin: 0;
+  padding: 0;
+  transform: none;
+  background: var(--paper-light);
 }
 
 .mobile-panel {
   display: flex;
-  width: min(100%, 430px);
-  min-height: 0;
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  height: 100%;
   flex-direction: column;
   overflow-y: auto;
   overscroll-behavior: contain;
   background: var(--paper-light);
-  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
 }
 
 .mobile-panel-top {
+  position: sticky;
+  z-index: 2;
+  top: 0;
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: space-between;
   min-height: 76px;
   padding: 0 24px;
   border-bottom: 1px solid var(--line);
+  background: var(--paper-light);
 }
 
 .mobile-panel .menu-close {
@@ -414,9 +423,9 @@ textarea:focus-visible,
 }
 
 .mobile-panel-bottom {
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
   align-items: center;
+  justify-content: flex-end;
   margin-top: auto;
   padding: 24px;
   gap: 16px;
@@ -1731,8 +1740,7 @@ textarea:focus-visible,
 
 @media (max-width: 1040px) {
   .desktop-nav,
-  .header-cta,
-  .header-actions > .lang-switch {
+  .header-cta {
     display: none;
   }
 
@@ -1916,6 +1924,20 @@ textarea:focus-visible,
     min-height: 68px;
   }
 
+  .header-inner {
+    gap: 12px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .header-actions .lang-switch.compact a,
+  .header-actions .lang-switch.compact span {
+    min-width: 38px;
+    min-height: 42px;
+  }
+
   .mobile-panel-top,
   .mobile-nav,
   .mobile-panel-bottom {
@@ -1928,11 +1950,11 @@ textarea:focus-visible,
   }
 
   .mobile-panel-bottom {
-    grid-template-columns: 1fr;
+    display: flex;
   }
 
-  .mobile-panel-bottom .lang-switch {
-    width: fit-content;
+  .mobile-panel-bottom .button {
+    width: 100%;
   }
 
   .hero {
@@ -2192,8 +2214,8 @@ textarea:focus-visible,
     font-size: 16px;
   }
 
-  .mobile-panel-bottom {
-    grid-template-columns: auto 1fr;
+  .mobile-panel-bottom .button {
+    width: auto;
   }
 }
 

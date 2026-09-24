@@ -90,8 +90,10 @@ function Header({ route }: { route: Route }) {
 
   useEffect(() => {
     if (!open) return
-    const previousOverflow = document.body.style.overflow
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = document.documentElement.style.overflow
     document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
     requestAnimationFrame(() => panelRef.current?.querySelector<HTMLElement>('.mobile-nav a')?.focus())
     const onKeyDown = (event: globalThis.KeyboardEvent) => {
       if (event.key === 'Escape') closeMenu(true)
@@ -107,7 +109,8 @@ function Header({ route }: { route: Route }) {
     document.addEventListener('keydown', onKeyDown)
     window.addEventListener('resize', onResize)
     return () => {
-      document.body.style.overflow = previousOverflow
+      document.body.style.overflow = previousBodyOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
       document.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('resize', onResize)
     }
@@ -123,7 +126,7 @@ function Header({ route }: { route: Route }) {
           <button className="menu-close" type="button" onClick={() => closeMenu(true)} aria-label={c.nav.close}><span /><span /></button>
         </div>
         <nav className="mobile-nav">{navigation.map(item => <a key={item.path} href={pathFor(route.lang, item.path)} aria-current={isActive(item.path) ? 'page' : undefined} onClick={() => closeMenu()}><span>{item.label}</span><ArrowIcon /></a>)}</nav>
-        <div className="mobile-panel-bottom"><LanguageSwitch route={route} onSelect={() => closeMenu()} /><LinkButton lang={route.lang} to="/contacts" className="button button-dark" onClick={() => closeMenu()}>{c.nav.discuss}</LinkButton></div>
+        <div className="mobile-panel-bottom"><LinkButton lang={route.lang} to="/contacts" className="button button-dark" onClick={() => closeMenu()}>{c.nav.discuss}</LinkButton></div>
       </div>
     </div>, document.body,
   ) : null
